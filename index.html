@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✦ Escape from the FOREST ✦</title>
+    <link>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eae5cf;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: center;
+        }
+
+        body.dark-mode {
+            background-color: #232323;
+            color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f1e0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s;
+            display: none;
+        }
+
+        body.dark-mode .container {
+            background-color: #2c2c2c;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #555246;
+            animation: slideIn 1s forwards;
+        }
+
+        body.dark-mode h1 {
+            color: #fff;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        p {
+            color: #666;
+            animation: slideIn 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        body.dark-mode p {
+            color: #ddd;
+        }
+
+        .btn-download {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            animation: pulse 2.5s infinite;
+            transition: transform 0.2s ease, width 0.2s ease;
+        }
+
+        .btn-download:hover,
+        .btn-more-info:hover,
+        .btn-grey:hover {
+            animation: vacillate 2s infinite;
+        }
+
+        @keyframes vacillate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(3deg);
+            }
+
+            100% {
+                transform: rotate(-3deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .btn-download:active {
+            transform: scale(1);
+        }
+
+        .btn-more-info,
+        .btn-tester-en-ligne {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #008CBA;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-more-info:hover,
+        .btn-tester-en-ligne:hover {
+            background-color: #005f73;
+        }
+
+        .btn-grey {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #777;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-grey:hover {
+            background-color: #555;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #444;
+            color: #fff;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-top:hover {
+            background-color: #555;
+        }
+
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .cookie-banner button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cookie-banner button:hover {
+            background-color: #45a049;
+        }
+
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10000;
+        }
+
+        #welcome-screen button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #welcome-screen button:hover {
+            background-color: #45a049;
+        }
+
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader {
+            border: 16px solid #ececec;
+            border-top: 16px solid #68abd7;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .thank-you {
+            display: none;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 300px;
+            animation: fadeIn 2s forwards;
+        }
+
+        /* New CSS for profile icon and username */
+        .profile-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            margin-right: 10px;
+        }
+
+        .profile-icon img {
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+        }
+
+        .profile-icon:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-username {
+            font-size: 16px;
+            color: #000;
+            font-weight: bold;
+        }
+
+        body.dark-mode .profile-username {
+            color: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="welcome-screen">
+        <h2>Ce site est la représentation officielle du jeu "Escape from the FOREST!" sorti sur Scratch</h2>
+        <button id="okButton">OK</button>
+    </div>
+
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <div class="container parallax">
+        <h1> ✦ Escape from the FOREST ✦ (en construction)</h1>
+        <p>Vous incarnez un aventurier intrépide perdu au cœur d'une mystérieuse forêt peuplée de créatures dangereuses. Votre objectif est simple mais périlleux : trouver la sortie de cette forêt labyrinthique tout en combattant les créatures qui s'y cachent.</p>
+        <div>
+            <a href="blob:https://packager.turbowarp.org/71d7da7b-62ad-441a-834c-d38a9840f7d2" class="btn-download" download="escape_forest_windows.zip">
+                Télécharger pour Windows
+            </a>
+            <a href="blob:https://packager.turbowarp.org/915ca7d5-7169-49e9-86f3-25ea2d68ab43" class="btn-download" download="escape_forest_mac.zip">
+                Télécharger pour macOS
+            </a>
+        </div>
+        <button class="btn-tester-en-ligne">Tester en ligne</button>
+        <button class="btn-more-info">Plus d'infos</button>
+        <button class="btn-grey" id="toggle-dark-mode">Mode sombre</button>
+        <div class="thank-you" id="thank-you-message">Merci d'avoir téléchargé !</div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Plus d'informations sur Escape from the FOREST</h2>
+            <p>Attaquer - Q ou Z<br>
+                Courrir - les flèches<br>
+                Sauter - flèche du haut<br>
+                Ramasser - S</p>
+        </div>
+    </div>
+
+    <button class="back-to-top" title="Retour en haut">&uarr;</button>
+
+    <div class="cookie-banner" id="cookie-banner">
+        <p>Ce site utilise des cookies pour vous garantir la meilleure expérience sur notre site. <button id="accept-cookies">Accepter</button></p>
+    </div>
+
+    <audio id="backgroundMusic" src="music_ForestGameSite.mp3"></audio>
+
+    <!-- New profile icon and username HTML -->
+    <div class="profile-container" id="profileContainer">
+        <div class="profile-icon" id="profileIcon">
+            <img src="icon_profil.png" alt="Profile Icon">
+        </div>
+        <div class="profile-username">BigDarkFish</div>
+    </div>
+
+    <script>
+        var welcomeScreen = document.getElementById("welcome-screen");
+        var okButton = document.getElementById("okButton");
+        var backgroundMusic = document.getElementById("backgroundMusic");
+
+        okButton.onclick = function() {
+            welcomeScreen.style.display = "none";
+            document.querySelector(".container").style.display = "block";
+            backgroundMusic.play();
+        };
+
+        var modal = document.getElementById("modal");
+        var btnMoreInfo = document.querySelector(".btn-more-info");
+        var spanClose = document.querySelector(".close");
+
+        btnMoreInfo.onclick = function() {
+            modal.style.display = "block";
+        };
+
+        spanClose.onclick = function() {
+            modal.style.display = "none";
+        };
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        var backToTopButton = document.querySelector(".back-to-top");
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+
+        backToTopButton.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        var cookieBanner = document.getElementById("cookie-banner");
+        var acceptCookiesButton = document.getElementById("accept-cookies");
+
+        if (!getCookie("cookiesAccepted")) {
+            cookieBanner.style.display = "block";
+        }
+
+        acceptCookiesButton.onclick = function() {
+            setCookie("cookiesAccepted", "true", 365);
+            cookieBanner.style.display = "none";
+        };
+
+        window.onload = function() {
+            setTimeout(function() {
+                var loadingScreen = document.getElementById("loading");
+                var container = document.querySelector(".container");
+                loadingScreen.style.display = "none";
+                container.style.display = "block";
+            }, 1500);
+        };
+
+        var toggleDarkModeButton = document.getElementById("toggle-dark-mode");
+        toggleDarkModeButton.onclick = function() {
+            document.body.classList.toggle("dark-mode");
+        };
+
+        var btnDownload = document.querySelectorAll(".btn-download");
+        var thankYouMessage = document.getElementById("thank-you-message");
+
+        btnDownload.forEach(function(button) {
+            button.onclick = function(event) {
+                event.preventDefault();
+                thankYouMessage.style.display = "block";
+                setTimeout(function() {
+                    thankYouMessage.style.display = "none";
+                }, 3000);
+
+                var link = button.href;
+                var anchor = document.createElement("a");
+                anchor.href = link;
+                anchor.download = button.getAttribute("download");
+                document.body.appendChild(anchor);
+                anchor.click();
+                document.body.removeChild(anchor);
+
+                window.open("https://www.paypal.com/donate", "_blank", "width=600,height=400");
+            };
+        });
+
+        var btnTesterEnLigne = document.querySelector(".btn-tester-en-ligne");
+
+        btnTesterEnLigne.onclick = function() {
+            window.open("Escape the FOREST!.html", "_blank");
+        };
+
+        // New JavaScript for profile icon
+        var profileContainer = document.getElementById("profileContainer");
+        profileContainer.onclick = function() {
+            window.open("https://github.com/BigDarkFish", "_blank");
+        };
+    </script>
+</body>
+
+</html>
