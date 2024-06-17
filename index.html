@@ -363,10 +363,9 @@
 
 <body>
     <div id="welcome-screen">
-        <h1>Bienvenue dans le monde d'✦ Escape from the FOREST ✦</h1>
-        <p>Veuillez entrer votre nom pour commencer votre aventure !</p>
+        <h1>Bienvenue sur le site d'Escape from the FOREST</h1>
         <input type="text" id="username" placeholder="Entrez votre nom">
-        <button onclick="startAdventure()">Commencer l'aventure</button>
+        <button onclick="startAdventure()">Commencer</button>
     </div>
 
     <div id="loading">
@@ -374,7 +373,7 @@
     </div>
 
     <div class="container">
-        <h1>Bienvenue sur le site d'Escape from the FOREST</h1>
+        <h1>✦ Escape from the FOREST! ™ ✦</h1>
         <button class="btn-download" onclick="downloadGame()">Télécharger le jeu</button>
         <a href="#" class="btn-more-info" onclick="openModal()">En savoir plus</a>
         <a href="https://example.com/tester-en-ligne" class="btn-tester-en-ligne" target="_blank">Tester en ligne</a>
@@ -385,7 +384,7 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>À propos de ✦ Escape from the FOREST ✦</h2>
+            <h2>À propos</h2>
             <p>Attaquer - Q ou Z<br>
                 Courrir - les flèches<br>
                 Sauter - flèche du haut<br>
@@ -452,7 +451,7 @@
         function downloadGame() {
             var link = document.createElement('a');
             link.href = 'jeu.zip';
-            link.download = 'Escape_from_the_FOREST.zip';
+            link.download = 'Escape_from_the_FOREST.zip'; 'Escape_from_the_FOREST.exe';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
