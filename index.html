@@ -329,241 +329,181 @@
             background-color: #4CAF50;
             color: white;
             border-radius: 5px;
-            width: 80%;
-            max-width: 300px;
-            animation: fadeIn 2s forwards;
         }
 
-        /* New CSS for profile icon and username */
-        .profile-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-            cursor: pointer;
+        .error-message {
+            display: none;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border-radius: 5px;
         }
 
-        .profile-icon {
-            width: 50px;
-            height: 50px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            margin-right: 10px;
+        /* Animation */
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        .profile-icon img {
-            width: 80%;
-            height: 80%;
-            border-radius: 50%;
-        }
-
-        .profile-icon:hover {
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-username {
-            font-size: 16px;
-            color: #000;
-            font-weight: bold;
-        }
-
-        body.dark-mode .profile-username {
-            color: #f4f4f4;
+        /* Apply the animation */
+        .container {
+            animation: slideInFromTop 0.5s ease-out;
         }
     </style>
 </head>
 
 <body>
     <div id="welcome-screen">
-        <h2>Ce site est la représentation officielle du jeu "Escape from the FOREST!" sorti sur Scratch</h2>
-        <button id="okButton">OK</button>
+        <h1>Bienvenue dans le monde d'✦ Escape from the FOREST ✦</h1>
+        <p>Veuillez entrer votre nom pour commencer votre aventure !</p>
+        <input type="text" id="username" placeholder="Entrez votre nom">
+        <button onclick="startAdventure()">Commencer l'aventure</button>
     </div>
 
     <div id="loading">
         <div class="loader"></div>
     </div>
 
-    <div class="container parallax">
-        <h1> ✦ Escape from the FOREST ✦ (en construction)</h1>
-        <p>Vous incarnez un aventurier intrépide perdu au cœur d'une mystérieuse forêt peuplée de créatures dangereuses. Votre objectif est simple mais périlleux : trouver la sortie de cette forêt labyrinthique tout en combattant les créatures qui s'y cachent.</p>
-        <div>
-            <a href="blob:https://packager.turbowarp.org/71d7da7b-62ad-441a-834c-d38a9840f7d2" class="btn-download" download="escape_forest_windows.zip">
-                Télécharger pour Windows
-            </a>
-            <a href="blob:https://packager.turbowarp.org/915ca7d5-7169-49e9-86f3-25ea2d68ab43" class="btn-download" download="escape_forest_mac.zip">
-                Télécharger pour MacOS
-            </a>
-            <a href="blob:https://packager.turbowarp.org/915ca7d5-7169-49e9-86f3-25ea2d68ab43" class="btn-download" download="escape_forest_linux.zip">
-                Télécharger pour Linux
-            </a>        
-        </div>
-        <button class="btn-tester-en-ligne">Tester en ligne</button>
-        <button class="btn-more-info">Plus d'infos</button>
+    <div class="container">
+        <h1>Bienvenue dans le monde d'✦ Escape from the FOREST ✦</h1>
+        <p>Préparez-vous à explorer, survivre et échapper aux mystères de cette forêt enchantée !</p>
+        <button class="btn-download" onclick="downloadGame()">Télécharger le jeu</button>
+        <a href="#" class="btn-more-info" onclick="openModal()">En savoir plus</a>
+        <a href="https://example.com/tester-en-ligne" class="btn-tester-en-ligne" target="_blank">Tester en ligne</a>
         <button class="btn-grey" id="toggle-dark-mode">Mode sombre</button>
-        <div class="thank-you" id="thank-you-message">Merci d'avoir téléchargé !</div>
+        <button class="btn-grey" id="toggle-mute">Muet</button>
     </div>
 
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Plus d'informations sur Escape from the FOREST</h2>
-            <p>Attaquer - Q ou Z<br>
-                Courrir - les flèches<br>
-                Sauter - flèche du haut<br>
-                Ramasser - S</p>
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>À propos de ✦ Escape from the FOREST ✦</h2>
+            <p>✦ Escape from the FOREST ✦ est un jeu d'aventure captivant qui vous plonge dans une forêt mystérieuse
+                pleine de défis et d'énigmes à résoudre. Explorez, survivez et échappez-vous pour découvrir les secrets
+                cachés dans cet environnement enchanteur.</p>
         </div>
     </div>
 
-    <button class="back-to-top" title="Retour en haut">&uarr;</button>
+    <button onclick="scrollToTop()" class="back-to-top" id="back-to-top">⬆</button>
 
     <div class="cookie-banner" id="cookie-banner">
-        <p>Ce site utilise des cookies pour vous garantir la meilleure expérience sur notre site. <button id="accept-cookies">Accepter</button></p>
+        <p>Ce site utilise des cookies pour améliorer votre expérience. En continuant à naviguer sur le site, vous acceptez notre utilisation des cookies.</p>
+        <button onclick="acceptCookies()">J'accepte</button>
     </div>
 
-    <audio id="backgroundMusic" src="music_ForestGameSite.mp3"></audio>
+    <div class="thank-you" id="thank-you-message">
+        Merci d'avoir accepté les cookies !
+    </div>
 
-    <!-- New profile icon and username HTML -->
-    <div class="profile-container" id="profileContainer">
-        <div class="profile-icon" id="profileIcon">
-            <img src="icon_profil.png" alt="Profile Icon">
-        </div>
-        <div class="profile-username">BigDarkFish</div>
+    <div class="error-message" id="error-message">
+        Une erreur s'est produite. Veuillez réessayer.
     </div>
 
     <script>
-        var welcomeScreen = document.getElementById("welcome-screen");
-        var okButton = document.getElementById("okButton");
-        var backgroundMusic = document.getElementById("backgroundMusic");
-
-        okButton.onclick = function() {
-            welcomeScreen.style.display = "none";
-            document.querySelector(".container").style.display = "block";
-            backgroundMusic.play();
-        };
-
-        var modal = document.getElementById("modal");
-        var btnMoreInfo = document.querySelector(".btn-more-info");
-        var spanClose = document.querySelector(".close");
-
-        btnMoreInfo.onclick = function() {
-            modal.style.display = "block";
-        };
-
-        spanClose.onclick = function() {
-            modal.style.display = "none";
-        };
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-
-        var backToTopButton = document.querySelector(".back-to-top");
-
-        window.onscroll = function() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                backToTopButton.style.display = "block";
-            } else {
-                backToTopButton.style.display = "none";
-            }
-        };
-
-        backToTopButton.onclick = function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        };
-
-        function setCookie(name, value, days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        var cookieBanner = document.getElementById("cookie-banner");
-        var acceptCookiesButton = document.getElementById("accept-cookies");
-
-        if (!getCookie("cookiesAccepted")) {
-            cookieBanner.style.display = "block";
-        }
-
-        acceptCookiesButton.onclick = function() {
-            setCookie("cookiesAccepted", "true", 365);
-            cookieBanner.style.display = "none";
-        };
-
-        window.onload = function() {
-            setTimeout(function() {
-                var loadingScreen = document.getElementById("loading");
-                var container = document.querySelector(".container");
+        document.addEventListener("DOMContentLoaded", function () {
+            var loadingScreen = document.getElementById("loading");
+            setTimeout(function () {
                 loadingScreen.style.display = "none";
-                container.style.display = "block";
-            }, 1500);
-        };
+            }, 3000);
 
-        var toggleDarkModeButton = document.getElementById("toggle-dark-mode");
-        toggleDarkModeButton.onclick = function() {
-            document.body.classList.toggle("dark-mode");
-        };
+            var darkModeToggle = document.getElementById("toggle-dark-mode");
+            var isDarkMode = false;
 
-        var btnDownload = document.querySelectorAll(".btn-download");
-        var thankYouMessage = document.getElementById("thank-you-message");
-
-        btnDownload.forEach(function(button) {
-            button.onclick = function(event) {
-                event.preventDefault();
-                thankYouMessage.style.display = "block";
-                setTimeout(function() {
-                    thankYouMessage.style.display = "none";
-                }, 3000);
-
-                var link = button.href;
-                var anchor = document.createElement("a");
-                anchor.href = link;
-                anchor.download = button.getAttribute("download");
-                document.body.appendChild(anchor);
-                anchor.click();
-                document.body.removeChild(anchor);
-
-                window.open("https://www.paypal.com/donate", "_blank", "width=600,height=400");
+            darkModeToggle.onclick = function () {
+                if (isDarkMode) {
+                    document.body.classList.remove("dark-mode");
+                    darkModeToggle.textContent = "Mode sombre";
+                } else {
+                    document.body.classList.add("dark-mode");
+                    darkModeToggle.textContent = "Mode clair";
+                }
+                isDarkMode = !isDarkMode;
             };
+
+            var scrollToTopButton = document.getElementById("back-to-top");
+
+            window.onscroll = function () {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            };
+
+            document.getElementById("cookie-banner").style.display = "block";
         });
 
-        var btnTesterEnLigne = document.querySelector(".btn-tester-en-ligne");
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
 
-        btnTesterEnLigne.onclick = function() {
-            window.open("Escape the FOREST!.html", "_blank");
-        };
+        function downloadGame() {
+            var link = document.createElement('a');
+            link.href = 'jeu.zip';
+            link.download = 'Escape_from_the_FOREST.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
-        // New JavaScript for profile icon
-        var profileContainer = document.getElementById("profileContainer");
-        profileContainer.onclick = function() {
-            window.open("https://github.com/BigDarkFish", "_blank");
+        function openModal() {
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function acceptCookies() {
+            document.getElementById("cookie-banner").style.display = "none";
+            document.getElementById("thank-you-message").style.display = "block";
+            setTimeout(function () {
+                document.getElementById("thank-you-message").style.display = "none";
+            }, 3000);
+        }
+
+        function startAdventure() {
+            var username = document.getElementById("username").value;
+            if (username.trim() !== "") {
+                var welcomeScreen = document.getElementById("welcome-screen");
+                welcomeScreen.style.animation = "slideInFromTop 0.5s ease-out reverse";
+                setTimeout(function () {
+                    welcomeScreen.style.display = "none";
+                    document.querySelector(".container").style.display = "block";
+                }, 500);
+            } else {
+                alert("Veuillez entrer votre nom pour commencer l'aventure !");
+            }
+        }
+
+        var backgroundMusic = new Audio('background-music.mp3');
+        backgroundMusic.loop = true;
+        backgroundMusic.play();
+
+        var toggleMuteButton = document.getElementById("toggle-mute");
+        var isMuted = false;
+
+        toggleMuteButton.onclick = function () {
+            if (isMuted) {
+                backgroundMusic.muted = false;
+                toggleMuteButton.textContent = "Muet";
+            } else {
+                backgroundMusic.muted = true;
+                toggleMuteButton.textContent = "Son activé";
+            }
+            isMuted = !isMuted;
         };
     </script>
 </body>
